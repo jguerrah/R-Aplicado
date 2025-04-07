@@ -1,0 +1,4 @@
+*.txt
+**/*.Rmd
+**/*.Rhistory
+**/*.html
