@@ -1,7 +1,7 @@
 # Universidad Nacional de Ingeniería
 # R
 # Jose Guerra
-# Marzo 2025
+# Noviembre 2025
 
 # rm(list = ls())
 
@@ -10,15 +10,15 @@
 # Parte I: Analysis of a Single Series
 
 ########## SETUP ##########
-install.packages("foreign") # read DTA
+install.packages("haven") # read DTA
 
 ########## DATA DESCRIPTION
 
 # House sale price for 29 houses in Central Davis in 1999
 #     29 observations on 9 variables
-library(foreign)
+library(haven)
 direccion <- 'http://cameron.econ.ucdavis.edu/aed/AED_HOUSE.DTA'
-data.HOUSE <- read.dta(direccion)
+data.HOUSE <- read_dta(direccion)
 
 #attach(data.HOUSE)
 #detach(data.HOUSE)
