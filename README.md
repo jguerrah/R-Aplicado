@@ -1,6 +1,6 @@
 # Introducción a R
 
-Material de clase del curso *R aplicado a IF EBF y RF* (pre maestría) de la UNI, verano 2025.
+Material de clase del curso *R aplicado a IF EBF y RF* (pre maestría) de la UNI, noviembre 2025.
 
 ## Descripción general
 
