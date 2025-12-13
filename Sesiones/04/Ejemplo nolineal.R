@@ -92,6 +92,7 @@ ac_data %>%
          bin_mid = 0.05 * (bin - 1) + 0.025) %>% 
   ggplot(aes(x = bin_mid, y = fraction_ac)) +
   geom_point() +
+  geom_abline(intercept=0, slope=1, color='red', linetype='dashed') +
   xlab('Probability of air conditioning') +
   ylab('Fraction with air conditioning')
 
@@ -162,4 +163,3 @@ library(mlogit)
 
 ?dfidx
 ?mlogit
-

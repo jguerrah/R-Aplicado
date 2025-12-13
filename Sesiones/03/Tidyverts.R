@@ -29,10 +29,21 @@ tsibble(
   key = c(xyz, abc)
 )
 
-data <- global_economy
-data
 
-ggplot(data, aes(x=Year, y=GDP)) +
-  geom_line() +
-  geom_point()
+gafa_stock
+class(gafa_stock)
 
+aapl_stock <- gafa_stock %>%
+  filter(Symbol == "AAPL") %>%
+  tsibble(index = Date, regular = TRUE) # Ensure regularity and declare index
+class(aapl_stock)
+aapl_stock
+
+
+library(feasts)
+
+autoplot(aapl_stock, Close) +
+  labs(title = "Apple Stock Closing Prices",
+       y = "Price (USD)",
+       x = "Date") +
+  theme_minimal()

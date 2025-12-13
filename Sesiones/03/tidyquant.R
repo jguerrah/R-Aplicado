@@ -10,6 +10,7 @@ tq_get_options()
 tq_get('META')
 
 data <- tq_get('META', from='2024-01-01')
+class(data)
 data
 tail(data)
 
@@ -32,6 +33,7 @@ data %>%
   labs(x="", y='Precio ajustado') +
   theme_tq()
 
+?geom_barchart
 data %>%
   #tail(30) %>%
   ggplot(aes(x=date)) +
@@ -68,6 +70,7 @@ data %>%
   facet_wrap(~symbol, ncol=2, scale='free_y') +
   theme_tq()
 
+?geom_ma
 data %>%
   ggplot(aes(x=date, y=adjusted, colour=symbol)) +
   geom_line() +
@@ -107,7 +110,7 @@ Rb <- returns %>%
   filter(symbol=='SPY')
 
 returns %>%
-  left_join(Rb, by=c('date'='date')) 
+  left_join(Rb, by=c('date'='date'))
 
 returns %>%
   left_join(Rb, by=c('date'='date')) %>%
@@ -119,7 +122,7 @@ returns %>%
   left_join(Rb, by=c('date'='date')) %>%
   tq_performance(Ra=daily.returns.x, 
                  Rb=daily.returns.y, 
-                 performance_fun = table.CAPM, Rf=0.01)
+                 performance_fun = table.CAPM, Rf=0.01, scale=252)
 
 returns %>%
   left_join(Rb, by=c('date'='date')) %>%
@@ -147,17 +150,3 @@ returns %>%
                weights=c(0.1, 0.5, 0.3, 0.1)) %>%
   ggplot(aes(x=date, y=cumsum(portfolio.returns))) +
   geom_line()
-
-library(tseries)
-returns %>%
-  select(daily.returns) %>%
-  ungroup() %>% 
-  pivot_wider(names_from=symbol, 
-              values_from=daily.returns)
-
-returns %>% 
-  portfolio.optim()
-
-
-
-

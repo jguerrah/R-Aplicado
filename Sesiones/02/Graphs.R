@@ -30,11 +30,13 @@ library(ggplot2)
 rm(list=ls())
 
 # ggplot2 incluye la base de datos mpg
+mpg
 head(mpg)
 summary(mpg)
 
 ?ggplot
 # ggplot construye el objeto inicial / plantilla
+ggplot()
 ggplot(data = mpg) # no tiene sentido as? solo
 
 # Diagrama de dispersi?n (Scatter)
@@ -131,50 +133,59 @@ ggplot(data = diamonds) +
 ggplot(data = diamonds) + 
   stat_count(mapping = aes(x = cut))
 
+
 # Relativa (%)
+?after_stat
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, y = after_stat(prop), group = 1))
 
+# horizontal
+?coord_flip
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, y = after_stat(prop), group = 1)) +
   coord_flip()
 
+# color (bordes)
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, colour = cut))
 
+# color (fill)
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, fill = cut))
 
+# sub-grupos (columna clarity)
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, fill = clarity))
 
+# alpha (transparencia)
 ggplot(data = diamonds, mapping = aes(x = cut, fill = clarity)) + 
   geom_bar(alpha = 1/5, position = "identity")
 
 ggplot(data = diamonds, mapping = aes(x = cut, colour = clarity)) + 
   geom_bar(fill = NA, position = "identity")
 
+# input 'position'
+?geom_bar
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, fill = clarity), position = "fill")
 
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, fill = clarity), position = "dodge")
 
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position = "nudge")
+
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity))
 
 df <- diamonds
 
 
 ggplot(data = df) + 
   geom_bar(mapping = aes(x = cut))
-+
-  geom_text(aes(label=c(5000,10000,15000, 20000, 30000)))
-# agregar labels en las barras
 
-
-
-# Revisar:
-# https://stats.idre.ucla.edu/r/codefragments/ggplot2_errorbar
-# https://ggplot2.tidyverse.org/
-# https://ggplot2-book.org/
-# https://r4ds.had.co.nz/data-visualisation.html
-# https://exts.ggplot2.tidyverse.org/gallery/
+ggplot(data = df, mapping = aes(x = cut)) + 
+  geom_bar(fill='steelblue') +
+  geom_text(aes(label=after_stat(count)), stat='count', vjust = -0.5) +
+  labs(title='Grafico de barras', x='Corte', y='Conteo') +
+  theme_minimal()

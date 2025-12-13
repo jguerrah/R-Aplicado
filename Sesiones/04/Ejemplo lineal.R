@@ -15,17 +15,19 @@ install.packages("haven") # read DTA
 ########## DATA DESCRIPTION
 
 # House sale price for 29 houses in Central Davis in 1999
-#     29 observations on 9 variables
+#     29 observations on 8 variables
 library(haven)
 direccion <- 'http://cameron.econ.ucdavis.edu/aed/AED_HOUSE.DTA'
 data.HOUSE <- read_dta(direccion)
 
-#attach(data.HOUSE)
-#detach(data.HOUSE)
+attach(data.HOUSE)
+price
+detach(data.HOUSE)
 
 summary(data.HOUSE)
 
 # Modelo MCO
+?lm
 ols <- lm(price ~ size, data.HOUSE)
 ols
 
@@ -40,10 +42,12 @@ abline(ols)
 legend(2700, 270000, c("Actual",  "Fitted"),
        lty=c(-1,1), pch=c(19,-1), bty="o")
 
+
 library(ggplot2)
 ggplot(data.HOUSE, aes(x=size, y=price)) +
   geom_point() +
   stat_smooth(method='lm', color='red')
+
 
 # Way to directly write Figure 1.1 to file
 png("figura1.png")
@@ -57,6 +61,14 @@ legend(2900, 270000, c("Actual","Fitted"),
 dev.off()
 
 
+ggplot(data.HOUSE, aes(x=size, y=price)) +
+  geom_point() +
+  geom_abline(intercept=coef(ols)[1], slope=coef(ols)[2], color='red') +
+  labs(title='Modelo lineal', x='Tamaño', y='Precio') +
+  theme_minimal()
+
+
+
 # Parte I: Analysis of Several Series
 
 rm(list=ls())
@@ -68,7 +80,7 @@ install.packages("huxtable") # For tables of regression output
 
 ############# DATA DESCRIPTION
 direccion <- 'http://cameron.econ.ucdavis.edu/aed/AED_HOUSE.DTA'
-data.HOUSE <- read.dta(direccion)
+data.HOUSE <- read_dta(direccion)
 
 # Table 10.1
 table101vars = c("price", "size", "bedrooms", "bathrooms", "lotsize",
@@ -81,11 +93,11 @@ summary(data.HOUSE)
 
 
 #price = c0 + c1*bedrooms + error
-ols.onereg = lm(price ~ bedrooms, data.HOUSE)
+ols.onereg <- lm(price ~ bedrooms, data.HOUSE)
 summary(ols.onereg)
 
 #price = c0 + c1*bedrooms + c2*size + error
-ols.tworeg = lm(price ~ bedrooms + size, data.HOUSE)
+ols.tworeg <- lm(price ~ bedrooms + size, data.HOUSE)
 summary(ols.tworeg)
 
 ####  10.2 TWO-WAY SCATTERPLOTS
@@ -94,9 +106,9 @@ summary(ols.tworeg)
 pairs(~price+size+bedrooms+age, data=data.HOUSE,
       main="Simple Scatterplot Matrix")
 
+
 install.packages('GGally')
 library(GGally)
-
 ggpairs(data.HOUSE)
 
 
@@ -141,6 +153,12 @@ cor^2
 
 ggplot(mapping=aes(x=pprice, y=data.HOUSE$price)) +
   geom_point()
+
+ggplot(mapping=aes(x=pprice, y=data.HOUSE$price)) +
+  geom_point() +
+  geom_abline(intercept=0, slope=1, color='red', linetype='dashed') +
+  labs(title='Precio vs Precio estimado', x='Precio estimado', y='Precio') +
+  theme_minimal()
 
 
 # Compute adjusted R-squared
