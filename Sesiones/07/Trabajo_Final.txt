@@ -1,0 +1,49 @@
+Universidad Nacional de Ingeniería
+R aplicado a IF EBF y RF
+José Guerra
+
+Material de clase: https://github.com/jguerrah/R-IF-EBF-RF
+
+Trabajo Final Aplicado
+----------------------
+
+Puntaje máximo: 20
+
+# Primera parte (10 puntos)
+Manipulación de datos y estadísticos descriptivos
+Por lo menos 2 o 3 variables
+Fuentes: BCRP, INEI, BVL, YAHOO Finance, otros
+1. Cargar la base de datos
+2. Presentar la data y limpiar de ser necesario
+3. Presentar estadísticos descriptivos
+4. Analizar correlación
+5. Graficar data (al menos 2 tipos de gráficos) con ggplot
+
+
+# Segunda parte (10 puntos)
+Utilice una base de datos y estime un modelo econométrico y/o de series de tiempo y/o de machine learning
+Realice la evaluación de los resultados (incluya al menos 1 gráfico del comportamiento de los errores)
+
+
+# Tercera parte (opcional, 10 puntos)
+Usar el Kolmogorov-Smirnov Goodness-of-Fit Test
+ver: ?ks.test
+Recordar que H0: La data en evaluación sigue la distribución en análisis
+se quiere que p-value > 0.05 para concluir que sí sigue la distribución
+Cree una función que permita aplicar ks.test para diferentes funciones
+Los inputs de esta función deben incluir (por lo menos):
+ - la data
+ - la distribución sobre la que se quiere contrastar
+Agregar un par de ejemplos de como usar la función y sus resultados
+
+
+# Cuarta parte (opcional, 5 puntos)
+Crear una función que, basada en la función creada en la Tercera parte,
+me diga qué distribución sigue mi data
+Se deben probar pruebas varias distribuciones, que se pueden rankear según p-value
+(para el ejercicio, se puede considerar que a mayor p-value, mayor Goodness-of-Fit)
+
+
+Fecha máxima de entrega: 05/01/2026 a las 23h59
+Enviar a: jguerrah@uni.pe
+Asunto del correo a enviar: TAF R - <Apellidos>, <Nombres>
