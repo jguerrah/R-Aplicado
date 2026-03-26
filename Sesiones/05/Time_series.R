@@ -1,7 +1,8 @@
 # Universidad Nacional de Ingenieria
+# Pre-Maestria
 # R Aplicado
 # Jose Guerra
-# 2025
+# Marzo 2026
 
 # https://www.tidymodels.org/
 # tidymodels: machine learning
@@ -12,13 +13,76 @@
 # https://tidyverts.org/
 # tidyverts: time series
 
+
+# Introducción: paquete stats (sin instalación)
+
+?ts
+valores <- c(10, 12, 15, 14, 18, 22, 25, 20, 24, 28, 32, 30,
+             15, 17, 20, 19, 23, 27, 30, 25, 29, 33, 37, 35,
+             20, 22, 25, 24, 28, 32, 35, 30, 34, 38, 42, 40)
+serie_base <- ts(valores, start = c(2020, 1), frequency = 12)
+
+class(serie_base)
+
+plot(serie_base, main = "Serie Temporal (Base R)")
+
+monthplot(serie_base)
+
+decompose(serie_base)
+
+plot(decompose(serie_base))
+
+?arima
+
+
+# Paquete zoo & xts
+# zoo: Z's Ordered Observations
+# xts: eXtensible Time Series (extensión de zoo)
+
+install.packages("xts")
+library(xts)
+
+dates <- seq(as.Date("2020-01-01"), by = "month", length.out = 36)
+serie_xts <- xts(valores, order.by = dates)
+
+class(serie_xts)
+
+serie_xts["2021"]
+serie_xts["2020-06/2021"]
+
+?arima
+
+
+# Paquete forecast
+
+install.packages("forecast")
+library(forecast)
+
+?auto.arima
+
+modelo_arima <- auto.arima(serie_base)
+modelo_arima
+
+serie_forecast <- forecast(modelo_arima, h = 12, level = c(90, 95))
+
+plot(serie_forecast)
+
+
+
+# fable / tsibble
+# alineado con el tidyverse
+
+# tidyverse
 install.packages("tidyverse")
+# tidyverts
 install.packages("tsibble")
 install.packages("tsibbledata")
 install.packages("feasts")
 install.packages("fable")
 
+# tidyverse
 library(tidyverse)
+# tidyverts
 library(tsibble)
 library(tsibbledata)
 library(feasts)
@@ -36,7 +100,7 @@ levels(df$Country)
 
 
 ?sapply
-df %>% 
+df %>%
   sapply(levels)
 df |>
   sapply(levels)
@@ -104,6 +168,18 @@ df <- df %>%
                mutate_fun=to.monthly)
 head(df)
 
+?as_tsibble
+
+# No hay soporte para "yearmon"
+df |>
+  as_tsibble(index=date)
+
+# Sí hay soporte en esta versión
+df |>
+  mutate(date = yearmonth(date)) |>
+  as_tsibble(index=date)
+
+
 df <- df %>%
   mutate(date = yearmonth(date)) %>%
   as_tsibble(index=date)
@@ -115,8 +191,9 @@ df %>%
 ?classical_decomposition
 ?model
 
-df %>%
+df |>
   model(classical_decomposition(adjusted, type="multiplicative"))
+
 
 df %>%
   model(classical_decomposition(adjusted, type="multiplicative")) %>% 
@@ -146,10 +223,17 @@ df %>%
 ?gg_tsdisplay
 df %>%
   gg_tsdisplay(adjusted, plot_type='partial')
+df %>%
+  gg_tsdisplay(adjusted, plot_type='histogram')
+df %>%
+  gg_tsdisplay(adjusted, plot_type='scatter')
+
 
 ?gg_lag
 df %>%
-  gg_lag(adjusted)
+  gg_lag(adjusted, lags=1:12)
+
+?arima # SARIMAX
 
 # Modelos SARIMAX
 # AR
@@ -184,7 +268,7 @@ df %>%
 ?gg_tsresiduals
 df %>% 
   model(arima = ARIMA(log(adjusted) ~ pdq(1,1,1))) %>%
-  gg_tsresiduals()
+  gg_tsresiduals(type="innovation")
 
 # ARMA(1,1)+AR(12) = SARIMA (1,0,1) (12,0,0)s
 model <- df %>% 
@@ -210,14 +294,14 @@ augment(model) %>%
 # Forecast
 model %>%
   forecast(h='12 months') %>%
-  autoplot(tail(df,24))
+  autoplot(tail(df,36))
 
 df %>% 
-  filter(date < make_yearmonth(2024,1)) %>%
+  filter(date < make_yearmonth(2025,1)) %>%
   model(arima = ARIMA(log(adjusted) ~ pdq(1,1,1) + PDQ(1,0,0))) %>%
-  forecast(h=23) %>%
+  forecast(h=15) %>%
   autoplot(df) +
-  geom_vline(xintercept = as_date(make_yearmonth(2024,1)), 
+  geom_vline(xintercept = as_date(make_yearmonth(2025,1)), 
              linetype = 'dashed', color='grey') +
   theme_minimal() +
   labs(x='', y='Precios de AAPL')
@@ -225,29 +309,27 @@ df %>%
 
 ?ETS
 models <- df %>%
-  filter(date < make_yearmonth(2024,1)) %>%
+  filter(date < make_yearmonth(2025,1)) %>%
   model(ets = ETS(adjusted), 
         ar = AR(adjusted ~ order(6)),
-        arima = ARIMA(adjusted ~ pdq(1,0,1) + PDQ(1,0,0)))
+        arima = ARIMA(log(adjusted) ~ pdq(1,1,1) + PDQ(1,0,0)))
 #  model(ets = ETS(log(adjusted)), 
 #        ar = AR(log(adjusted) ~ order(6)),
 #        arima = ARIMA(log(adjusted) ~ pdq(1,1,1) + PDQ(1,0,0)))
 
 models %>%
-  forecast(h=23) %>%
-  autoplot(tail(df, 47), level=NULL) +
-  geom_vline(xintercept = as_date(make_yearmonth(2024,1)), 
+  forecast(h=15) %>%
+  autoplot(tail(df, 36), level=NULL) +
+  geom_vline(xintercept = as_date(make_yearmonth(2025,1)), 
              linetype = 'dashed', color='grey') +
   theme_minimal() +
   labs(x='', y='Precios de AAPL')
 
 
-# resid vs innov ? input type en residuals
-# https://github.com/tidyverts/fabletools/blob/v0.5.1/R/broom.R
-# linea 66, 67
+# resid vs innov
 augment(models)
 augment(models) |>
-  autoplot(.resid)
+  autoplot(.innov) # .resid
 
 models %>%
   residuals()
@@ -261,21 +343,22 @@ lung_deaths <- cbind(mdeaths, fdeaths) %>%
   as_tsibble(pivot_longer = FALSE)
 
 lung_deaths %>%
-  model(var=VAR(vars(mdeaths, fdeaths) ~ AR(3))) %>%
+  model(var=fable::VAR(vars(mdeaths, fdeaths) ~ AR(3))) %>%
   report()
 
+# mdeaths ~ mdeaths(-1) + mdeaths(-2) + mdeaths(-3) + fdeaths(-1) + fdeaths(-2) + fdeaths(-3)
+# fdeaths ~ mdeaths(-1) + mdeaths(-2) + mdeaths(-3) + fdeaths(-1) + fdeaths(-2) + fdeaths(-3)
 
 df <-  global_economy
 df %>%
   select(Growth, Imports, Exports) %>%
   filter(Country == "United States") %>%
-  model(VAR(vars(Growth, Imports, Exports) ~ AR(5))) %>%
+  model(fable::VAR(vars(Growth, Imports, Exports) ~ AR(5))) %>%
   report()
 
 df %>%
   select(Growth, Imports, Exports) %>%
   filter(Country == "United States") %>%
-  model(VAR(vars(Growth, Imports, Exports) ~ AR(5))) %>%
+  model(fable::VAR(vars(Growth, Imports, Exports) ~ AR(5))) %>%
   IRF() %>%
   gg_irf()
-

@@ -1,7 +1,8 @@
 # Universidad Nacional de Ingenieria
+# Pre-Maestria
 # R Aplicado
 # Jose Guerra
-# 2025
+# Marzo 2026
 
 rm(list=ls())
 

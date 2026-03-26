@@ -1,6 +1,8 @@
 # Universidad Nacional de Ingenieria
+# Pre-Maestria
 # R Aplicado
-# José Guerra
+# Jose Guerra
+# Marzo 2026
 
 rm(list = ls())
 
@@ -138,6 +140,24 @@ ac_data %>%
   xlab('Income') +
   ylab('Kernel density')
 
+## Plot fraction vs. probability of air conditioning using bins
+ac_data %>% 
+  mutate(utility_ac_logit = predict(binary_logit_inc)) %>% 
+  mutate(probability_ac_logit = 1 / (1 + exp(-utility_ac_logit))) %>% 
+  mutate(bin = cut(probability_ac_logit,
+                   breaks = seq(0, 1, 0.05),
+                   labels = 1:20)) %>%
+  group_by(bin) %>% 
+  summarize(fraction_ac = mean(air_conditioning), .groups = 'drop') %>% 
+  mutate(bin = as.numeric(bin),
+         bin_mid = 0.05 * (bin - 1) + 0.025) %>% 
+  ggplot(aes(x = bin_mid, y = fraction_ac)) +
+  geom_point() +
+  geom_abline(intercept=0, slope=1, color='red', linetype='dashed') +
+  xlab('Probability of air conditioning') +
+  ylab('Fraction with air conditioning')
+
+
 
 ### Calculate marginal utility of cost variables
 ## Calculate marginal utility of costs when income == 30
@@ -160,6 +180,12 @@ coef(binary_logit)[2] / coef(binary_logit)[3]
 # Logit Multinomial
 install.packages('mlogit')
 library(mlogit)
-
 ?dfidx
 ?mlogit
+
+
+# Modelos de supervivencia
+install.packages("survival")
+library(survival)
+?Surv
+?survfit

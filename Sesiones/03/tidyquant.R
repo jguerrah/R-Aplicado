@@ -1,9 +1,14 @@
+# Universidad Nacional de Ingenieria
+# Pre-Maestria
+# R Aplicado
+# Jose Guerra
+# Febrero 2026
 
 rm(list=ls())
 
 install.packages('tidyquant')
-library('tidyquant')
 library('tidyverse')
+library('tidyquant')
 
 ?tq_get
 tq_get_options()
@@ -35,21 +40,21 @@ data %>%
 
 ?geom_barchart
 data %>%
-  #tail(30) %>%
+  tail(30) %>%
   ggplot(aes(x=date)) +
   geom_barchart(aes(open=open, high=high, close=close, low=low)) +
   labs(x="", y='Precios') +
   theme_tq()
 
 data %>%
-  #tail(30) %>%
+#  tail(30) %>%
   ggplot(aes(x=date)) +
   geom_candlestick(aes(open=open, high=high, close=close, low=low), 
                    colour_up='darkgreen', fill_up='darkgreen') +
   labs(x="", y='Precios') +
   theme_tq() +
-  coord_x_date(xlim=c(as.Date("2024-06-01"), as.Date("2024-07-01")), 
-               ylim=c(450,525))
+  coord_x_date(xlim=c(as.Date("2026-01-01"), as.Date("2026-02-01")), 
+               ylim=c(600,750))
 
 tickers <- c('SPY', 'META', 'QQQ', 'IVE')
 data <- tq_get(tickers, from='2024-01-01')
@@ -150,3 +155,4 @@ returns %>%
                weights=c(0.1, 0.5, 0.3, 0.1)) %>%
   ggplot(aes(x=date, y=cumsum(portfolio.returns))) +
   geom_line()
+

@@ -1,7 +1,8 @@
-# Universidad Nacional de Ingenier?a
-# Reforzamiento en Programaci?n con R Aplicado
-# José Guerra
-# 2025
+# Universidad Nacional de Ingenieria
+# Pre-Maestria
+# R Aplicado
+# Jose Guerra
+# Febrero 2026
 
 # rm(list = ls())
 
@@ -30,9 +31,23 @@ library(ggplot2)
 rm(list=ls())
 
 # ggplot2 incluye la base de datos mpg
+# https://ggplot2.tidyverse.org/reference/mpg.html
 mpg
 head(mpg)
 summary(mpg)
+#####
+# manufacturer: manufacturer name
+# model: model name
+# displ: engine displacement, in litres
+# year: year of manufacture
+# cyl: number of cylinders
+# trans: type of transmission
+# drv: the type of drive train, where f = front-wheel drive, r = rear wheel drive, 4 = 4wd
+# cty: city miles per gallon
+# hwy: highway miles per gallon
+# fl: fuel type
+# class: "type" of car
+#####
 
 ?ggplot
 # ggplot construye el objeto inicial / plantilla
@@ -44,6 +59,9 @@ ggplot(data = mpg) # no tiene sentido as? solo
 # objeto inicial (database) + geom_point
 ggplot(data = mpg) + 
   geom_point(mapping = aes(x = displ, y = hwy))
+# plot general
+plot(mpg$displ, mpg$hwy)
+plot(mpg$displ, mpg$hwy, type='p', xlab='displ', ylab='hwy')
 
 # por class - color
 ggplot(data = mpg) + 
@@ -95,10 +113,12 @@ ggplot(data = mpg) +
 
 # Recodar que tambi?n podemos definir el objeto inicial
 # con las caracteristicas de los gr?ficos a llamar
+ggplot(mpg, mapping = aes(displ, hwy))
 ggplot(mpg, mapping = aes(displ, hwy)) + 
   geom_smooth() + 
   geom_point()
 
+ggplot()
 ggplot() + 
   geom_smooth(data = mpg, mapping = aes(displ, hwy)) + 
   geom_point(data = mpg, mapping = aes(displ, hwy))
@@ -122,8 +142,22 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
 # Barras
 ?geom_bar
 # Base de datos diamonds (de ggplot2)
+# https://ggplot2.tidyverse.org/reference/diamonds.html
 head(diamonds)
 summary(diamonds)
+#####
+# price: price in US dollars ($326–$18,823)
+# carat: weight of the diamond (0.2–5.01)
+# cut: quality of the cut (Fair, Good, Very Good, Premium, Ideal)
+# color: diamond colour, from D (best) to J (worst)
+# clarity: a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))
+# x: length in mm (0–10.74)
+# y: width in mm (0–58.9)
+# z: depth in mm (0–31.8)
+# depth: total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43–79)
+# table: width of top of diamond relative to widest point (43–95)
+#####
+
 
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut))
@@ -157,6 +191,9 @@ ggplot(data = diamonds) +
 ggplot(data = diamonds) + 
   geom_bar(mapping = aes(x = cut, fill = clarity))
 
+ggplot(data = diamonds) + 
+  geom_bar(mapping = aes(x = cut, fill = clarity), position="identity")
+
 # alpha (transparencia)
 ggplot(data = diamonds, mapping = aes(x = cut, fill = clarity)) + 
   geom_bar(alpha = 1/5, position = "identity")
@@ -186,6 +223,6 @@ ggplot(data = df) +
 
 ggplot(data = df, mapping = aes(x = cut)) + 
   geom_bar(fill='steelblue') +
-  geom_text(aes(label=after_stat(count)), stat='count', vjust = -0.5) +
+  geom_text(aes(label=after_stat(count)), stat='count', vjust = -0.2) +
   labs(title='Grafico de barras', x='Corte', y='Conteo') +
   theme_minimal()

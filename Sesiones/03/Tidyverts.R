@@ -1,3 +1,9 @@
+# Universidad Nacional de Ingenieria
+# Pre-Maestria
+# R Aplicado
+# Jose Guerra
+# Febrero 2026
+
 install.packages('tsibble')
 install.packages('tsibbledata')
 
@@ -47,3 +53,4 @@ autoplot(aapl_stock, Close) +
        y = "Price (USD)",
        x = "Date") +
   theme_minimal()
+

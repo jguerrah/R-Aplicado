@@ -1,7 +1,8 @@
-# Universidad Nacional de Ingeniería
-# R
+# Universidad Nacional de Ingenieria
+# Pre-Maestria
+# R Aplicado
 # Jose Guerra
-# Noviembre 2025
+# Marzo 2026
 
 # rm(list = ls())
 
@@ -30,6 +31,7 @@ summary(data.HOUSE)
 ?lm
 ols <- lm(price ~ size, data.HOUSE)
 ols
+class(ols)
 
 summary(ols)
 
@@ -39,7 +41,7 @@ plot(data.HOUSE$size,data.HOUSE$price,
      ylab="House sale price in dollars",
      pch=19)
 abline(ols)
-legend(2700, 270000, c("Actual",  "Fitted"),
+legend(2700, 290000, c("Actual",  "Fitted"),
        lty=c(-1,1), pch=c(19,-1), bty="o")
 
 
@@ -56,7 +58,7 @@ plot(data.HOUSE$size,data.HOUSE$price,
      ylab="House sale price in dollars",
      pch=19)
 abline(ols)
-legend(2900, 270000, c("Actual","Fitted"),
+legend(2900, 280000, c("Actual","Fitted"),
        lty=c(-1,1), pch=c(19,-1), bty="o")
 dev.off()
 
@@ -66,8 +68,7 @@ ggplot(data.HOUSE, aes(x=size, y=price)) +
   geom_abline(intercept=coef(ols)[1], slope=coef(ols)[2], color='red') +
   labs(title='Modelo lineal', x='Tamaño', y='Precio') +
   theme_minimal()
-
-
+ggsave("figura1.png")
 
 # Parte I: Analysis of Several Series
 

@@ -1,3 +1,9 @@
+# Universidad Nacional de Ingenieria
+# Pre-Maestria
+# R Aplicado
+# Jose Guerra
+# Febrero 2026
+
 ## -----------------------------------------------------------------------------
 objeto.uno <- 1
 objeto_uno <- 1
@@ -26,9 +32,10 @@ otro_objeto_con_nombre_largo
 seq(1,5)
 x <- seq(1,5)
 x
-#help(seq)
+help(seq)
 
 ## -----------------------------------------------------------------------------
+seq(from=1, to=5)
 seq(from = 1, to = 5, by = 2)
 seq(from = 1, by = 2, to = 5)
 seq(by = 2, to = 5, from = 1)
@@ -36,7 +43,7 @@ seq(by = 2, to = 5, from = 1)
 ## -----------------------------------------------------------------------------
 y <- rep(0,5)
 y
-#?rep
+?rep
 
 ## -----------------------------------------------------------------------------
 date() # fecha actual
@@ -53,7 +60,7 @@ rm(list = ls()) # remove all objects
 getwd() # ver wd
 #setwd("C:/Users/Jose/OneDrive/Teaching/UNI") # cambiar wd
 #setwd("./Sesion 1") # cambiar a una carpeta del wd
-#list.files() # archivos en tu wd
+list.files() # archivos en tu wd
 
 ## -----------------------------------------------------------------------------
 a <- 5
@@ -77,6 +84,7 @@ c(TRUE, FALSE, FALSE, TRUE)
 c(1<2, 8>10, 9>23, 100==60+40)
 
 ## -----------------------------------------------------------------------------
+class(3)
 int <- as.integer(3) # forma correcta
 int
 class(int)
@@ -159,6 +167,7 @@ a <- 1:3
 b <- rep(a, times=3)
 c <- rep(a, each=3)
 a; b; c
+
 
 ## -----------------------------------------------------------------------------
 b+c
@@ -243,18 +252,13 @@ df
 df$texto
 
 ## -----------------------------------------------------------------------------
-df <- data.frame(numeros=c(10,20,30,40),
-                 texto=c("a","b","a","c"))
-df
-df$texto
-
-## -----------------------------------------------------------------------------
 rm(list = ls()) # limpiando el global enviroment
 
 ## -----------------------------------------------------------------------------
 my_function <- function() {
   print("Hola!")
 }
+
 my_function()
 
 ## -----------------------------------------------------------------------------
@@ -274,13 +278,48 @@ y <- 20
 f1(x,y)
 
 ## -----------------------------------------------------------------------------
-rating <- 29
+rating <- 27
 clasificacion <- if (rating > 70) {
   "A"
-  } else if (rating > 50) {
+} else if (rating > 50) {
   "B"
-  } else {
+} else {
   "c"
 }
 clasificacion
 
+
+numbers <- c(10, 20, 30, 40)
+for (num in numbers) {
+  print(paste("Current number:", num))
+}
+
+
+
+# initial values
+initial_investment <- 10000  # Starting capital
+annual_contribution <- 1200   # Amount added each year
+annual_interest_rate <- 0.07 # 7% annual interest rate
+investment_horizon_years <- 10 # Number of years to invest
+
+# vector
+investment_values <- numeric(investment_horizon_years) # vector de 0s
+investment_values[1] <- initial_investment * (1 + annual_interest_rate) + annual_contribution
+
+# Loop periodos siguientes
+for (i in 2:investment_horizon_years) {
+  investment_values[i] <- investment_values[i-1] * (1 + annual_interest_rate) + annual_contribution
+}
+
+# Print the final investment value
+cat("The final investment value after", investment_horizon_years, "years is:", round(investment_values[investment_horizon_years], 2))
+
+
+
+
+i <- 1
+
+while (i <= 5) {
+  print(i)
+  i <- i + 1
+}

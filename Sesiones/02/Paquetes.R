@@ -1,7 +1,8 @@
 # Universidad Nacional de Ingenieria
-# Reforzamiento en Programacion con R Aplicado
+# Pre-Maestria
+# R Aplicado
 # Jose Guerra
-# 2025
+# Febrero 2026
 
 # rm(list = ls())
 
@@ -56,6 +57,7 @@ mydata[mydata$cyl > 4, ]
 
 
 filter(myirisdata, Species == 'setosa')
+iris[iris$Species=='setosa',]
 
 filter(myirisdata, Species %in% c('setosa', 'virginica'))
 
@@ -96,6 +98,15 @@ mynewdata%>%
   select(cyl, wt, gear)%>%
   arrange(desc(wt))
 
+# arrange también aplica a texto
+myirisdata |>
+  select(Sepal.Length, Species) |>
+  arrange(Species)
+
+myirisdata |>
+  select(Sepal.Length, Species) |>
+  arrange(desc(Species))
+
 # mutate
 mynewdata %>%
   select(mpg, cyl) %>%
@@ -124,6 +135,7 @@ myirisdata |>
   summarise(avg.pl = mean(Petal.Length), avg.pw = mean(Petal.Width), n=n())
 
 # rename
+mynewdata
 mynewdata %>% rename(miles = mpg)
 
 
@@ -144,5 +156,6 @@ mynewdata |>
   unite('gear_carb', gear:carb, sep='.', remove=FALSE)
 
 mynewdata |> 
-  unite('gear_carb', gear:carb, sep='.') |>
+  unite('gear_carb', gear:carb, sep='--') |>
   separate(gear_carb, c('gear2', 'carb2'), convert=TRUE)
+

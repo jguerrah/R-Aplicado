@@ -1,7 +1,8 @@
 # Universidad Nacional de Ingenieria
-# Reforzamiento en Programacion con R Aplicado
+# Pre-Maestria
+# R Aplicado
 # Jose Guerra
-# 2025
+# Febrero 2026
 
 # rm(list = ls())
 
@@ -39,7 +40,7 @@ database[ ,1:3]
 database[1:2 ,1:3]
 
 head(database, 3) # 3 primeras filas
-tail(database, 2) # 2 ?ltimas filas
+tail(database, 2) # 2 últimas filas
 
 # Seleccionando en base a variables logical
 index <- database$GNP > 350
@@ -76,14 +77,14 @@ database2 <- cbind(database, GNP3 = c_logic)
 database2
 
 # comando merge
-db1 <- database[1:6,
+db1 <- database[1:3,
                  c("Year", "Population", "Armed.Forces")]
 db1
-db2 <- database[1:6,
+db2 <- database[4:6,
                 c("Year", "GNP", "Unemployed")]
 db2
 
-db3 <- merge(db1, db2)
+db3 <- merge(db1, db2, all=TRUE)
 db3
 
 # Filas: comando rbind (row binding)

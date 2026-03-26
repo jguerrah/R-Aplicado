@@ -1,7 +1,16 @@
+# Universidad Nacional de Ingenieria
+# Pre-Maestria
+# R Aplicado
+# Jose Guerra
+# Marzo 2026
+
+rm(list=ls())
 
 install.packages("quantmod")
 library(quantmod)
 
+# Fermi Inc. (FRMI)
+# https://finance.yahoo.com/quote/FRMI/
 ticker <- "FRMI" # Fermi Inc.
 period <- "60min" # 30min, 15min, etc.
 
@@ -31,6 +40,7 @@ ggplot(data, aes(x = Date, y = FRMI.Close)) +
   labs(title = "FRMI Adjusted Close (60 min)", x = "Time", y = "Price")
 
 
+# https://cran.r-project.org/web/packages/rugarch/index.html
 install.packages("rugarch")
 library(rugarch)
 
@@ -66,3 +76,7 @@ spec2 <- ugarchspec(variance.model = list(model="eGARCH", garchOrder=c(1, 1)),
 egarch11 <- ugarchfit(spec=spec2, data=returns)
 
 print(egarch11)
+
+# https://cran.r-project.org/web/packages/tsgarch/index.html
+#install.packages("tsgarch")
+#library(tsgarch)
