@@ -10,24 +10,23 @@ rm(list = ls())
 # WebScrapping
 # ---------------------------------
 
-# https://finance.yahoo.com/quote/FB2A.BE/history?p=FB2A.BE
-# https://finance.yahoo.com/quote/FB2A.F/history?p=FB2A.F
+# https://finance.yahoo.com/quote/FB2A.F/history/
 
-# Ejemplo de META
-# https://query1.finance.yahoo.com/v7/finance/download/
-# META?
-# period1=1678652769&period2=1710275169
-# &interval=1d
-# &events=history
-# &includeAdjustedClose=true
+# https://finance.yahoo.com/quote/FB2A.F/history/
+# ?
+# period1=1712016000
+# &
+# period2=1775089026
 
+# https://finance.yahoo.com/quote/FB2A.F/history/
+# ?
+# period1=1680393600
+# &
+# period2=1767139200
 
-# https://query1.finance.yahoo.com/v7/finance/download/
-# NVDA?
-# period1=1678671007&period2=1710293407
-# &interval=1d
-# &events=history
-# &includeAdjustedClose=true
+# https://finance.yahoo.com/quote/FB2A.F/history/
+# ?period1=1680393600&period2=1767139200
+# &frequency=1wk
 
 
 # rvest
@@ -70,6 +69,13 @@ web %>%
   html_elements("p.temp") %>%
   html_text()
 
+web %>%
+  html_elements("p.temp-low") %>%
+  html_text()
+
+web %>%
+  html_elements("p.period-name") %>%
+  html_text()
 
 # readr
 # https://readr.tidyverse.org/
@@ -110,12 +116,21 @@ titles |>
   str_trim()
 
 ?str_squish
-titles |>
+titles <- titles |>
   str_squish()
+
+tags <- web %>%
+  html_elements("h3.news__tag") %>%
+  html_text() |>
+  str_squish()
+
+tibble(Tag = tags, Title = titles)
+
 
 
 # Ejemplo aplicado
 # BCRP
+
 link <- "https://estadisticas.bcrp.gob.pe/estadisticas/series/diarias/resultados/PD04709XD/html/"
 web <- read_html(link)
 web
@@ -127,9 +142,17 @@ embig <- embig[[1]]
 colnames(embig)[2] <- "EMBIG_Peru"
 embig
 
+# |>    es con    _
+# %>%   es con    .
 embig <- web |>
   html_elements(xpath='//*[@id="frmDiarias"]/div[3]/table') |>
   html_table() |>
   _[[1]] |>
   rename_with(.cols=2, ~ "EMBIG_Peru")
 embig
+
+
+web |>
+  html_element(xpath='//*[@id="frmDiarias"]/div[3]/table') |>
+  html_table() |>
+  rename_with(.cols=2, ~ "EMBIG_Peru")

@@ -1,6 +1,6 @@
 # Introducción a R
 
-Material de clase del curso *R Aplicado* (pre maestría) de la UNI, marzo 2026.
+Material de clase del curso *R Aplicado* (pre maestría) de la UNI, febrero - marzo 2026.
 
 ## Descripción general
 
@@ -19,8 +19,14 @@ En material se encuentra en *[Sesiones](/Sesiones/)*, con 1 carpeta por sesión 
 - [Sesión 03](/Sesiones/03/): intro a *tidyquant* y *tidyverts*
 - [Sesión 04](/Sesiones/04/): intro a modelos lineales y no lineales
 - [Sesión 05](/Sesiones/05/): intro a series de tiempo con *tidyverts*
-- [Sesión 06](/Sesiones/06/): intro a *highfrequency* (intraday) y *stochvol* (modelos de volatilidad)
-- [Sesión 07](/Sesiones/07/): intro a webscraping estático (*rvest*) y machine learning
+- [Sesión 06](/Sesiones/06/): intro a intraday análisis y modelos de volatilidad
+- [Sesión 07](/Sesiones/07/): intro a webscraping estático (*rvest*)
+
+## Trabajo Aplicado Final
+
+El objetivo del Trabajo Aplicado Final es evaluar la aplicación de conocimientos de programación en R presentados en clase.
+
+Ver [detalles del trabajo](TAF.md).
 
 ## Material de referencia
 
